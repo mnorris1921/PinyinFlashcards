@@ -13,6 +13,10 @@
 		4C6437D420CC4EAF00A3EA09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C6437D220CC4EAF00A3EA09 /* Main.storyboard */; };
 		4C6437E020CC4EAF00A3EA09 /* PinyinFlashcardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437DF20CC4EAF00A3EA09 /* PinyinFlashcardsTests.swift */; };
 		4C6437EB20CC4EAF00A3EA09 /* PinyinFlashcardsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437EA20CC4EAF00A3EA09 /* PinyinFlashcardsUITests.swift */; };
+		4C6437FB20CC4F5300A3EA09 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437F820CC4F5200A3EA09 /* MainScreen.swift */; };
+		4C6437FC20CC4F5300A3EA09 /* Flashcards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437F920CC4F5200A3EA09 /* Flashcards.swift */; };
+		4C6437FD20CC4F5300A3EA09 /* CSVPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437FA20CC4F5200A3EA09 /* CSVPath.swift */; };
+		4C6437FF20CC4F5900A3EA09 /* SingletonCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C6437FE20CC4F5900A3EA09 /* SingletonCSV.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +50,10 @@
 		4C6437E620CC4EAF00A3EA09 /* PinyinFlashcardsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PinyinFlashcardsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C6437EA20CC4EAF00A3EA09 /* PinyinFlashcardsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinyinFlashcardsUITests.swift; sourceTree = "<group>"; };
 		4C6437EC20CC4EAF00A3EA09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C6437F820CC4F5200A3EA09 /* MainScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
+		4C6437F920CC4F5200A3EA09 /* Flashcards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Flashcards.swift; sourceTree = "<group>"; };
+		4C6437FA20CC4F5200A3EA09 /* CSVPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSVPath.swift; sourceTree = "<group>"; };
+		4C6437FE20CC4F5900A3EA09 /* SingletonCSV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingletonCSV.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,10 @@
 			children = (
 				4C6437CC20CC4EAC00A3EA09 /* AppDelegate.swift */,
 				4C6437CE20CC4EAC00A3EA09 /* ViewController.swift */,
+				4C6437FE20CC4F5900A3EA09 /* SingletonCSV.swift */,
+				4C6437FA20CC4F5200A3EA09 /* CSVPath.swift */,
+				4C6437F920CC4F5200A3EA09 /* Flashcards.swift */,
+				4C6437F820CC4F5200A3EA09 /* MainScreen.swift */,
 				4C6437D020CC4EAF00A3EA09 /* Assets.xcassets */,
 				4C6437D220CC4EAF00A3EA09 /* Main.storyboard */,
 				4C6437D520CC4EAF00A3EA09 /* Info.plist */,
@@ -254,7 +266,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6437FB20CC4F5300A3EA09 /* MainScreen.swift in Sources */,
 				4C6437CF20CC4EAC00A3EA09 /* ViewController.swift in Sources */,
+				4C6437FF20CC4F5900A3EA09 /* SingletonCSV.swift in Sources */,
+				4C6437FC20CC4F5300A3EA09 /* Flashcards.swift in Sources */,
+				4C6437FD20CC4F5300A3EA09 /* CSVPath.swift in Sources */,
 				4C6437CD20CC4EAC00A3EA09 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
