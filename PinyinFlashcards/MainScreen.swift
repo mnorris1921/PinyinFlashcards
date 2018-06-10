@@ -9,15 +9,13 @@
 import Cocoa
 
 class MainScreen: NSViewController {
-    
-    let singletonCSV = SingletonCSV()
 
     override func viewDidLoad () {
         super.viewDidLoad()
 
         let realPath = "/Users/Michael/Desktop/test.csv"
         let str = readDataFromCSV(path: realPath)
-        singletonCSV.csv = csv(data: str)
+        SingletonCSV.sharedInstance.csv = csv(data: str!)
     }
 
     func csv (data: String) -> [[String]] {
@@ -30,19 +28,23 @@ class MainScreen: NSViewController {
         return result
     }
 
-    func readDataFromCSV (path:String)-> String! {
-        do {
-            var contents = try String(contentsOfFile: path)
-            contents = cleanRows(file: contents)
-            return contents
-        } catch {
-            print("File Read Error for file \(path)")
-            return nil
+    func readDataFromCSV (path:String) -> String! {
+        var contents = ""
+        if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.desktopDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
+            
+            let path = NSURL(fileURLWithPath: dir).appendingPathComponent("test.csv")
+            do {
+                contents = try NSString(contentsOf: path!, encoding: String.Encoding.utf8.rawValue) as String
+            }
+            catch {
+                print("could not find file at path")
+            }
         }
+        return contents
     }
 
 
-    func cleanRows (file:String)->String {
+    func cleanRows (file:String) -> String {
         var cleanFile = file
         cleanFile = cleanFile.replacingOccurrences(of: "\r", with: "\n")
         cleanFile = cleanFile.replacingOccurrences(of: "\n\n", with: "\n")

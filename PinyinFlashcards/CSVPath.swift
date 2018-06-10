@@ -9,20 +9,11 @@
 import Cocoa
 
 class CSVPath: NSViewController {
-    
-    let singletonCSV = SingletonCSV()
-    
     @IBOutlet weak var Path: NSTextField!
     
     @IBAction func Go(sender: AnyObject) {
         
-//        do {
-//            let realPath = "/Users/Michael/Desktop/" + Path.stringValue
-//            singletonCSV.csv = try CSV(name: realPath)
-//        } catch {
-//            // Catch errors or something
-//            print(error)
-//        }
+        // todo
         
         self.view.window?.close()
     }

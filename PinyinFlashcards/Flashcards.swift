@@ -9,22 +9,20 @@
 import Cocoa
 
 class Flashcards: NSViewController {
-    
-    let singletonCSV = SingletonCSV()
     var isChineseToEnglish = true
     
     var seenCards = [BooleanLiteralType]()
-    var currentPair = ["" : ""]
+    var currentPair = [String]()
     var currentIndex = 0
     
     @IBOutlet weak var word: NSTextField!
     
     @IBOutlet weak var changeCardButton: NSButton!
+    @IBOutlet weak var englishToChinese: NSButton!
+    @IBOutlet weak var chineseToEnglish: NSButton!
     
     @IBAction func ChangeCard(sender: AnyObject) {
-        changeCardButton.layer?.backgroundColor = NSColor.lightGray.cgColor
-        currentIndex = Int(arc4random_uniform(UInt32(singletonCSV.csv.rows.count)) - 1)
-        currentPair = singletonCSV.csv.rows[currentIndex]
+        currentIndex = Int(arc4random_uniform(UInt32(SingletonCSV.sharedInstance.csv.count)) - 1)
         updateWord()
     }
     
@@ -40,11 +38,14 @@ class Flashcards: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        changeCardButton.layer?.backgroundColor = NSColor.white.cgColor
+        changeCardButton.layer?.backgroundColor = NSColor.magenta.cgColor
+        changeCardButton.layer?.backgroundColor = NSColor.magenta.cgColor
         word.font = NSFont(name: word.font!.fontName, size: 40)
+        word.alignment = NSTextAlignment.center
         
-        seenCards = [Bool](count: singletonCSV.csv.rows.count, repeatedValue: false)
+        seenCards = [Bool](repeating: false, count: SingletonCSV.sharedInstance.csv.count)
         currentIndex = 0
-        currentPair = singletonCSV.csv.rows[currentIndex]
         updateWord()
     }
     
@@ -57,11 +58,12 @@ class Flashcards: NSViewController {
     }
     
     func updateWord () {
+        currentPair = SingletonCSV.sharedInstance.csv[currentIndex]
         if (isChineseToEnglish) {
-            word.stringValue = currentPair.values.first!
+            word.stringValue = currentPair[0]
         }
         else {
-            word.stringValue = currentPair.keys.first!
+            word.stringValue = currentPair[1]
         }
     }
 }

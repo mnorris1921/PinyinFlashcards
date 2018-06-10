@@ -9,5 +9,6 @@
 import Cocoa
 
 class SingletonCSV {
+    static let sharedInstance = SingletonCSV()
     var csv : [[String]]!
 }
