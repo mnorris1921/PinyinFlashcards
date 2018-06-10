@@ -37,7 +37,10 @@ class Flashcards: NSViewController {
     }
     
     @IBAction func ChangeCard(sender: AnyObject) {
-        currentIndex = Int(arc4random_uniform(UInt32(SingletonCSV.sharedInstance.csv.count)) - 1)
+        currentIndex = Int(arc4random_uniform(UInt32(SingletonCSV.sharedInstance.csv.count)))
+        if (currentIndex == SingletonCSV.sharedInstance.csv.count) {
+            currentIndex = currentIndex - 1;
+        }
         updateWord()
     }
     
