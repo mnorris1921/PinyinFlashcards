@@ -22,7 +22,7 @@ class MainScreen: NSViewController {
         var result: [[String]] = []
         let rows = data.components(separatedBy: "\n")
         for row in rows {
-            let columns = row.components(separatedBy: ";")
+            let columns = row.components(separatedBy: ",")
             result.append(columns)
         }
         return result

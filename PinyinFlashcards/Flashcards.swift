@@ -8,6 +8,16 @@
 
 import Cocoa
 
+extension NSImage {
+    class func swatchWithColor(color: NSColor, size: NSSize) -> NSImage {
+        let image = NSImage(size: size)
+        image.lockFocus()
+        color.drawSwatch(in: NSMakeRect(0, 0, size.width, size.height))
+        image.unlockFocus()
+        return image
+    }
+}
+
 class Flashcards: NSViewController {
     var isChineseToEnglish = true
     
@@ -16,31 +26,26 @@ class Flashcards: NSViewController {
     var currentIndex = 0
     
     @IBOutlet weak var word: NSTextField!
-    
     @IBOutlet weak var changeCardButton: NSButton!
-    @IBOutlet weak var englishToChinese: NSButton!
-    @IBOutlet weak var chineseToEnglish: NSButton!
+    @IBOutlet weak var changeLanguageButton: NSButton!
+    @IBOutlet weak var notes: NSTextField!
+    @IBOutlet weak var changeLanguageLabel: NSTextField!
+    
+    @IBAction func ChangeLanguage(_ sender: Any) {
+        isChineseToEnglish = !isChineseToEnglish
+        updateWord()
+    }
     
     @IBAction func ChangeCard(sender: AnyObject) {
         currentIndex = Int(arc4random_uniform(UInt32(SingletonCSV.sharedInstance.csv.count)) - 1)
         updateWord()
     }
     
-    @IBAction func ChineseToEnglish(sender: AnyObject) {
-        isChineseToEnglish = true
-        updateWord()
-    }
-    
-    @IBAction func EnglishToChinese(sender: AnyObject) {
-        isChineseToEnglish = false
-        updateWord()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         changeCardButton.layer?.backgroundColor = NSColor.white.cgColor
-        changeCardButton.layer?.backgroundColor = NSColor.magenta.cgColor
-        changeCardButton.layer?.backgroundColor = NSColor.magenta.cgColor
+        changeLanguageButton.image = NSImage.swatchWithColor(color: NSColor.white, size: NSMakeSize(643, 159))
+        
         word.font = NSFont(name: word.font!.fontName, size: 40)
         word.alignment = NSTextAlignment.center
         
