@@ -20,10 +20,11 @@ extension NSImage {
 
 class Flashcards: NSViewController {
     var isChineseToEnglish = true
-    
-    var seenCards = [BooleanLiteralType]()
+    var shuffled = [[String]]()
     var currentPair = [String]()
     var currentIndex = 0
+    
+    let NUM_COLUMNS = 2
     
     @IBOutlet weak var word: NSTextField!
     @IBOutlet weak var changeCardButton: NSButton!
@@ -37,11 +38,13 @@ class Flashcards: NSViewController {
     }
     
     @IBAction func ChangeCard(sender: AnyObject) {
-        currentIndex = Int(arc4random_uniform(UInt32(SingletonCSV.sharedInstance.csv.count)))
-        if (currentIndex == SingletonCSV.sharedInstance.csv.count) {
-            currentIndex = currentIndex - 1;
+        currentIndex = currentIndex + 1
+        if (currentIndex == shuffled.count) {
+            self.view.window?.close()
         }
-        updateWord()
+        else {
+            updateWord()
+        }
     }
     
     override func viewDidLoad() {
@@ -49,10 +52,11 @@ class Flashcards: NSViewController {
         changeCardButton.layer?.backgroundColor = NSColor.white.cgColor
         changeLanguageButton.image = NSImage.swatchWithColor(color: NSColor.white, size: NSMakeSize(643, 159))
         
+        shuffled = shuffle(csv: SingletonCSV.sharedInstance.csv)
+        
         word.font = NSFont(name: word.font!.fontName, size: 40)
         word.alignment = NSTextAlignment.center
         
-        seenCards = [Bool](repeating: false, count: SingletonCSV.sharedInstance.csv.count)
         currentIndex = 0
         updateWord()
     }
@@ -65,8 +69,26 @@ class Flashcards: NSViewController {
         super.viewDidAppear()
     }
     
+    func shuffle (csv: [[String]]) -> [[String]] {
+        let size = csv.count
+        // 2 is the number of columns
+        //var shuffled = [[String]](repeating: [String](repeating: "", count: NUM_COLUMNS), count: size)
+        var shuffled = csv
+        for (i, row) in shuffled.enumerated() {
+            var randNdx = Int(arc4random_uniform(UInt32(size)))
+            if (randNdx == size) {
+                randNdx = randNdx - 1;
+            }
+            
+            let temp = shuffled[randNdx]
+            shuffled[randNdx] = row
+            shuffled[i] = temp
+        }
+        return shuffled
+    }
+    
     func updateWord () {
-        currentPair = SingletonCSV.sharedInstance.csv[currentIndex]
+        currentPair = shuffled[currentIndex]
         if (isChineseToEnglish) {
             word.stringValue = currentPair[0]
         }
