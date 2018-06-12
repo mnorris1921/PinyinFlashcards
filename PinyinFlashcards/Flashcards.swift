@@ -61,6 +61,19 @@ class Flashcards: NSViewController {
         updateWord()
     }
     
+    @IBAction func PreviousCard(_ sender: Any) {
+        if currentIndex == 0 {
+            self.view.window?.close()
+        }
+        else {
+            repeat {
+                currentIndex = currentIndex - 1
+            } while (currentIndex > 0 && (shuffled[currentIndex][0]).isEmpty)
+            
+            updateWord()
+        }
+    }
+    
     @IBAction func ChangeCard(sender: AnyObject) {
         repeat {
             currentIndex = currentIndex + 1
@@ -81,6 +94,11 @@ class Flashcards: NSViewController {
         
         shuffled = SingletonCSV.sharedInstance.csv.shuffled()
         
+        word.lineBreakMode = .byWordWrapping
+        word.setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 250), for: .horizontal)
+        word.usesSingleLineMode = false
+        word.cell?.wraps = true
+        word.cell?.isScrollable = false
         word.font = NSFont(name: word.font!.fontName, size: 40)
         word.alignment = NSTextAlignment.center
         
