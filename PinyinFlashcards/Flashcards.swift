@@ -18,10 +18,34 @@ extension NSImage {
     }
 }
 
+extension MutableCollection {
+    /// Shuffles the contents of this collection.
+    mutating func shuffle() {
+        let c = count
+        guard c > 1 else { return }
+        
+        for (firstUnshuffled, unshuffledCount) in zip(indices, stride(from: c, to: 1, by: -1)) {
+            // Change `Int` in the next line to `IndexDistance` in < Swift 4.1
+            let d: Int = numericCast(arc4random_uniform(numericCast(unshuffledCount)))
+            let i = index(firstUnshuffled, offsetBy: d)
+            swapAt(firstUnshuffled, i)
+        }
+    }
+}
+
+extension Sequence {
+    /// Returns an array with the contents of this sequence, shuffled.
+    func shuffled() -> [Element] {
+        var result = Array(self)
+        result.shuffle()
+        return result
+    }
+}
+
 class Flashcards: NSViewController {
     var isChineseToEnglish = true
     var shuffled = [[String]]()
-    var currentPair = [String]()
+    var currentRow = [String]()
     var currentIndex = 0
     
     let NUM_COLUMNS = 2
@@ -52,7 +76,7 @@ class Flashcards: NSViewController {
         changeCardButton.layer?.backgroundColor = NSColor.white.cgColor
         changeLanguageButton.image = NSImage.swatchWithColor(color: NSColor.white, size: NSMakeSize(643, 159))
         
-        shuffled = shuffle(csv: SingletonCSV.sharedInstance.csv)
+        shuffled = SingletonCSV.sharedInstance.csv.shuffled()
         
         word.font = NSFont(name: word.font!.fontName, size: 40)
         word.alignment = NSTextAlignment.center
@@ -69,31 +93,16 @@ class Flashcards: NSViewController {
         super.viewDidAppear()
     }
     
-    func shuffle (csv: [[String]]) -> [[String]] {
-        let size = csv.count
-        // 2 is the number of columns
-        //var shuffled = [[String]](repeating: [String](repeating: "", count: NUM_COLUMNS), count: size)
-        var shuffled = csv
-        for (i, row) in shuffled.enumerated() {
-            var randNdx = Int(arc4random_uniform(UInt32(size)))
-            if (randNdx == size) {
-                randNdx = randNdx - 1;
-            }
-            
-            let temp = shuffled[randNdx]
-            shuffled[randNdx] = row
-            shuffled[i] = temp
-        }
-        return shuffled
-    }
-    
     func updateWord () {
-        currentPair = shuffled[currentIndex]
+        currentRow = shuffled[currentIndex]
         if (isChineseToEnglish) {
-            word.stringValue = currentPair[0]
+            word.stringValue = currentRow[0]
         }
         else {
-            word.stringValue = currentPair[1]
+            word.stringValue = currentRow[1]
+        }
+        if currentRow.count > 2 {
+            notes.stringValue = "Notes: " + currentRow[2]
         }
     }
 }
