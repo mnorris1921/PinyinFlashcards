@@ -10,11 +10,11 @@ import Cocoa
 
 class MainScreen: NSViewController {
 
+    let realPath = "ChineseVocab1.csv"
+    
     override func viewDidLoad () {
         super.viewDidLoad()
-
-        let realPath = "/Users/Michael/Desktop/test.csv"
-        let str = readDataFromCSV(path: realPath)
+        let str = readDataFromCSV()
         SingletonCSV.sharedInstance.csv = csv(data: str!)
     }
 
@@ -28,11 +28,11 @@ class MainScreen: NSViewController {
         return result
     }
 
-    func readDataFromCSV (path:String) -> String! {
+    func readDataFromCSV () -> String! {
         var contents = ""
         if let dir = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.desktopDirectory, FileManager.SearchPathDomainMask.allDomainsMask, true).first {
             
-            let path = NSURL(fileURLWithPath: dir).appendingPathComponent("test.csv")
+            let path = NSURL(fileURLWithPath: dir).appendingPathComponent(realPath)
             do {
                 contents = try NSString(contentsOf: path!, encoding: String.Encoding.utf8.rawValue) as String
             }
