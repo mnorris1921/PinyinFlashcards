@@ -10,7 +10,7 @@ import Cocoa
 
 class MainScreen: NSViewController {
 
-    let realPath = "ChineseVocab1.csv"
+    let realPath = "ChineseVocab3.csv"
     
     override func viewDidLoad () {
         super.viewDidLoad()

@@ -77,7 +77,8 @@ class Flashcards: NSViewController {
     @IBAction func ChangeCard(sender: AnyObject) {
         repeat {
             currentIndex = currentIndex + 1
-        } while ((shuffled[currentIndex][0]).isEmpty)
+        } while (currentIndex < shuffled.count &&
+            (shuffled[currentIndex][0]).isEmpty)
         
         if (currentIndex == shuffled.count) {
             self.view.window?.close()
